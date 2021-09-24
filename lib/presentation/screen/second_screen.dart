@@ -1,19 +1,20 @@
 import 'package:counter_cubit/logic/cubit/counter_cubit.dart';
-import 'package:counter_cubit/presentation/second_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({Key? key, required this.title}) : super(key: key);
+class SecondPage extends StatefulWidget {
+  SecondPage({Key? key, required this.title, required this.homeScreenKey}) : super(key: key);
 
   final String title;
+  final GlobalKey<ScaffoldState> homeScreenKey;
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _SecondPageState createState() => _SecondPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  GlobalKey<ScaffoldState> homeScreenKey = GlobalKey<ScaffoldState>();
+class _SecondPageState extends State<SecondPage> {
+  GlobalKey<ScaffoldState> secondScreenKey = GlobalKey<ScaffoldState>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
+      key: secondScreenKey,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -37,7 +39,7 @@ class _HomePageState extends State<HomePage> {
                       duration: Duration(milliseconds: 1000),
                     ),
                   );
-                } else if (state.counterValue < 0) {
+                }else if(state.counterValue < 0 ){
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text("Counter value has now negative value!"),
@@ -78,25 +80,6 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ), //
-            SizedBox(
-              height: 30,
-            ),
-            MaterialButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => BlocProvider.value(
-                              value: BlocProvider.of<CounterCubit>(context),
-                              child: SecondPage(title: "Second Page"),
-                            )));
-              },
-              child: Text(
-                "Goto Second Page",
-                style: TextStyle(color: Colors.white),
-              ),
-              color: Colors.blueGrey,
-            )
           ],
         ),
       ),

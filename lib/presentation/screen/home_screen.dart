@@ -1,17 +1,18 @@
 import 'package:counter_cubit/logic/cubit/counter_cubit.dart';
+import 'package:counter_cubit/presentation/router/routing_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SecondPage extends StatefulWidget {
-  SecondPage({Key? key, required this.title}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _SecondPageState createState() => _SecondPageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _SecondPageState extends State<SecondPage> {
+class _HomePageState extends State<HomePage> {
   GlobalKey<ScaffoldState> homeScreenKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -20,6 +21,7 @@ class _SecondPageState extends State<SecondPage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
+      key: homeScreenKey,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -36,7 +38,7 @@ class _SecondPageState extends State<SecondPage> {
                       duration: Duration(milliseconds: 1000),
                     ),
                   );
-                }else if(state.counterValue < 0 ){
+                } else if (state.counterValue < 0) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text("Counter value has now negative value!"),
@@ -77,6 +79,19 @@ class _SecondPageState extends State<SecondPage> {
                 ],
               ),
             ), //
+            SizedBox(
+              height: 30,
+            ),
+            MaterialButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(SecondScreenRoute, arguments: homeScreenKey);
+              },
+              child: Text(
+                "Goto Second Page",
+                style: TextStyle(color: Colors.white),
+              ),
+              color: Colors.blueGrey,
+            )
           ],
         ),
       ),
