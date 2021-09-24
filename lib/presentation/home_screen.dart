@@ -86,8 +86,10 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            SecondPage(title: "Second Page")));
+                        builder: (_) => BlocProvider.value(
+                              value: BlocProvider.of<CounterCubit>(context),
+                              child: SecondPage(title: "Second Page"),
+                            )));
               },
               child: Text(
                 "Goto Second Page",
